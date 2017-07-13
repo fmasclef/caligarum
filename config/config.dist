@@ -1,0 +1,55 @@
+{
+  "database": {
+    "host": "localhost",
+    "port": 3306,
+    "db": "caligarum",
+    "user": "caligarum",
+    "password": "passw0rd",
+    "threads": 10,
+    "queue": 20
+  },
+  "jwt": {
+    "secret": "a_secret",
+    "lasting": 3600
+  },
+  "log": {
+    "level": "info",
+    "console": {
+      "enabled": true
+    },
+    "file": {
+      "enabled": false,
+      "filename": "/var/log/caligarum/caligarum.log",
+      "size": 1024,
+      "files": 10
+    }
+  },
+  "mail": {
+    "sender": {
+      "name": "your_name",
+      "email": "you@domain.ext"
+    },
+    "transport": {
+      "mailgun": {
+        "key": "your_api_key",
+        "domain": "your_domain"
+      },
+      "mailjet": {
+        "key": "your_api_key",
+        "secret": "your_api_key_secret"
+      },
+      "sendgrid": {
+        "key": "your_api_key",
+        "user": "your_username"
+      },
+      "sparkpost": {
+        "key": "your_api_key"
+      }
+    }
+  },
+  "server": {
+    "port": 8008,
+    "proxy": "http://...",
+    "url": "http://localhost:8008"
+  }
+}
