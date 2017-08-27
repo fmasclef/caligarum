@@ -74,9 +74,9 @@ if (cluster.isMaster) {
       database   : config.database.db,
       password   : config.database.password,
       dir        : path.join(__dirname, 'sql'),
-      patchKey   : 'custom-patch-level',
+      patchKey   : (config.database.custom_sql_prefix || 'custom') + '-patch-level',
       patchLevel : 1,
-      filePrefix : 'custom',
+      filePrefix : config.database.custom_sql_prefix || 'custom',
       metaTable  : 'metadata',
       mysql      : mysql
     }, function(err, res) {

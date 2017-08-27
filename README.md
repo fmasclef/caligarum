@@ -107,7 +107,7 @@ A special call returns a markdown documentation of the REST API. This markdown f
 The special call is:
 
 		curl -X OPTIONS localhost:8008
-		
+
 It's an unauthenticated call by design. Should you require to secure it, just use one of the authentication middlewares available *(or write your own)*.
 
 ## hack it!
@@ -116,11 +116,11 @@ caligarum is a base template. You have to implement your own model and controlle
 
 ### model
 
-Your logic surely requires some SQL. caligarum will update the database schema by using files located in the `sql` folder. You have to write *custom* patches for the **do** and **undo** methods. Your patch files must be named `custom-<A>-<B>.sql` where *A* is the origin version and *B* the resulting version.
+Your logic surely requires some SQL. caligarum will update the database schema by using files located in the `sql` folder. You have to write *custom* patches for the **do** and **undo** methods. Your patch files must be named `<prefix>-<A>-<B>.sql` where *prefix* identifies your project, *A* is the origin version and *B* the resulting version.
 
-> You must alter `metadata.custom-patch-level` to reflect the current patch level.
+> You must alter `metadata.<prefix>-patch-level` to reflect the current patch level. Your prefix must be set in the configuration file as **database.custom_sql_prefix**. By default, caligarum will try to run SQL files using the `custom` prefix.
 
-Sample patches from version 0000 to 0001 (and back) are provided.
+Sample patches from version 0000 to 0001 (and back) are provided under the `custom` prefix.
 
 ### controllers
 
@@ -142,12 +142,12 @@ caligarum provides an API authentication mechanism as well as a user JWT based a
 The API usage requires the user to send a basic HTTP authentication header:
 
 	Authorization: Basic *base64 encoded api:<api_key>*
-	
+
 The user authentication mchanism requires the user to authenticate using HTTP basic authentication with his email and password to receive a JWT token he can use for further requests:
 
 	Authorization: Basic *base64 encoded email:<password>*
 	GET /auth/token
-	
+
 then:
 
 	Authorization: Bearer <JWT>
@@ -171,12 +171,12 @@ As previously noted a mailer service is available. It makes use of **pug** templ
 
 	let mail = mailer.prepare(<template>, customization, options)
 	mailer.send(mail)
-  
+
 <tempalte> is a the name of both plain text and HTML template. They are located on the `views/mail/html|text` folder.
 
 > The HTML version of the template is mandatory. The plain text version will fallback to `views/mail/text/_fallback.pug`
 
-The `customization` parameter is a JSON used as substitution variables by the pug template engine. 
+The `customization` parameter is a JSON used as substitution variables by the pug template engine.
 
 The `options` parameter is a JSON object containing both *to* and *subject* keys.
 
@@ -200,7 +200,7 @@ Follow this process:
 Use the `__` JS function to call the translator service.
 
 	p= __('greetings', firstname)
-	
+
 This will create a `<p>` tag with the translated message referenced `greetings` with parameter `firstname`. Note that `firstname` should have been defined as a key of the customization object used with *mailer.prepare*.
 
 #### the translation files
@@ -210,7 +210,7 @@ Edit JSON files located in the `locales` folder. You might add as many language 
 	{
 		"greetings": "Hello %s"
 	}
-	
+
 > Note the use of `%s` which is a placeholder for a string (in our scenario: the firstname).
 
 #### call the router

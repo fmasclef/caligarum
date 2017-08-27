@@ -6,7 +6,8 @@
     "user": "caligarum",
     "password": "passw0rd",
     "threads": 10,
-    "queue": 20
+    "queue": 20,
+    "custom_sql_prefix": "custom"
   },
   "jwt": {
     "secret": "a_secret",
