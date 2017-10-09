@@ -37,8 +37,8 @@
     "node-mailjet": "^3.1.0",
     "os": "^0.1.1",
     "path": "^0.12.7",
-    "pug": "^2.0.0-rc.2",
-    "sendgrid": "^5.1.1",
+    "pug": "^2.0.0-rc.4",
+    "@sendgrid/mail": "^6.1.4",
     "sparkpost": "^2.1.2",
     "uuid": "^3.0.1",
     "winston": "^2.x"
