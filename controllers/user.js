@@ -6,10 +6,6 @@ var
   router = express.Router(),
   crypto = require('crypto')
 
-  router.get('/test', function(req, res, next) {
-    res.send("aa" + res.__('greetings', 'john'))
-  })
-
 /**
  * Create a user
  */
@@ -38,9 +34,9 @@ router.post('/', chkparams(['email', 'firstname', 'lastname']), function(req, re
         let
           mailopts = {
             to: req.body.email.toLowerCase(),
-            subject: res.__('mail.title.registration', req.body.firstname.ucfirst())
+            subject: req.t('mail.title.registration', { firstname: req.body.firstname.ucfirst()})
           },
-            mail = mailer.prepare('registration', {
+          mail = mailer.prepare('registration', {
             firstname: req.body.firstname.ucfirst(),
             password: password
           }, mailopts)
@@ -102,7 +98,7 @@ router.post('/recovery', chkparams(['email']), function(req, res, next) {
         let
           mailopts = {
             to: result[0].email,
-            subject: res.__('mail.title.lostpassword')
+            subject: req.t('mail.title.lostpassword')
           },
             mail = mailer.prepare('lostpassword', {
             firstname: result[0].firstname,
@@ -150,7 +146,7 @@ router.get('/recovery/:hash/:recovery', function(req, res, next) {
             let
               mailopts = {
                 to: result[0].email,
-                subject: res.__('mail.title.recovery')
+                subject: req.t('mail.title.recovery')
               },
                 mail = mailer.prepare('recovery', {
                 firstname: result[0].firstname,

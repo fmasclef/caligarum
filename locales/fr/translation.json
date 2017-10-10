@@ -1,16 +1,15 @@
 {
-  "greetings": "Bonjour %s",
+  "greetings": "Bonjour {{firstname}}",
   "mail": {
     "title": {
-      "registration": "Bienvenue à bord %s",
+      "registration": "Bienvenue à bord {{firstname}}",
       "lostpassword": "Réinitialisation de votre mot de passe",
       "recovery": "Votre mot de passe"
     },
-    "registration": "Nous sommes heureux de vous compter parmis nous. Votre mot de passe est : <strong>%s</strong>",
+    "registration": "Nous sommes heureux de vous compter parmis nous. Votre mot de passe est : <strong>{{password}}</strong>",
     "password": {
       "lost": "Vous nous avez demandé de réinitialiser votre mot de passe. Pour ce faire, veuillez suivre le lien contenu dans cet email. Si vous n'êtes pas à l'origine de cette demande, ne tenez pas compte de ce message.",
-      "changed": "Votre mot de passe est : <strong>%s</strong>",
-      "recovery": "%s/user/recovery/%s/%s"
+      "changed": "Votre mot de passe est : <strong>{{password}}</strong>"
     }
   }
 }

@@ -1,6 +1,8 @@
 global.express   = require('express')
 global.app       = express()
-global.i18n      = require('i18n')
+global.i18next   = require('i18next')
+global.i18n      = require('i18next-express-middleware')
+global.fsbackend = require('i18next-node-fs-backend')
 global.basicAuth = require('./middlewares/auth/basic')
 global.jwtAuth   = require('./middlewares/auth/jwt')
 global.chkparams = require('./middlewares/request/simpleparamchecker')
@@ -13,6 +15,9 @@ var
   compression = require('compression'),
   chronometer = require('./middlewares/request/chronometer')
 
+// templating engine, in case we need to send some mails
+app.set('view engine', 'pug')
+
 // security settings
 app.set('trust proxy', 1)
 app.use(helmet())
@@ -24,21 +29,32 @@ app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({ extended: true }))
 
 // i18n intended for mailing purpose
-i18n.configure({
-    directory: __dirname + '/locales',
-    updateFiles: false,
-    objectNotation: true
-})
-app.use(i18n.init)
+i18next
+  .use(fsbackend)
+  .use(i18n.LanguageDetector)
+  .init({
+    lng: 'en',
+    fallbackLng: 'en',
+    preload: ['en', 'fr'],
+    saveMissing: false,
+    backend: {
+      loadPath: __dirname + '/locales/{{lng}}/{{ns}}.json',
+      addPath: __dirname + '/locales/{{lng}}/{{ns}}.missing.json'
+    }
+  })
+
+// make use of i18next express middleware
+app.use(i18n.handle(i18next, {
+  removeLngFromUrl: false
+}))
+
+// we'll use pug a static way, so we can't rely on i18next express middleware
 app.use(function(req, res, next) {
-    app.locals.__ = res.locals.__ = res.__ = function() {
-        return i18n.__.apply(req, arguments)
+    app.locals.t = function() {
+        return req.t.apply(req, arguments)
     }
     next()
 })
-
-// templating engine, in case we need to send some mails
-app.set('view engine', 'pug')
 
 app.use(express.static(__dirname + '/static'))
 

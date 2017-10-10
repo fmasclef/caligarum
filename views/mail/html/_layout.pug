@@ -3,7 +3,7 @@ html
     title= title
   body
     img(src="cid:3VR8aK6PKuA45J4BfmaH27X3mrB3m37C" alt="logo")
-    p= __('greetings', firstname)
+    p= t('greetings', {firstname: firstname})
     block content
     p
       span #{pjson.name}

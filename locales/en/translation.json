@@ -1,0 +1,16 @@
+{
+  "greetings": "Hello {{firstname}}",
+  "mail": {
+    "title": {
+      "registration": "Welcome on board {{firstname}}",
+      "lostpassword": "About your password",
+      "recovery": "Your password"
+    },
+    "registration": "Thanks for registering with us. Your password is: <strong>{{password}}</strong>",
+    "password": {
+      "lost": "Someone requested a new password on your behalf. Should you NOT be the requester, discard this email. Otherwise, follow the provided link to reset your password.",
+      "changed": "Your password has been changed to: <strong>{{password}}</strong>",
+      "recovery": "{{url}}/user/recovery/{{hash}}/{{recovery}}"
+    }
+  }
+}

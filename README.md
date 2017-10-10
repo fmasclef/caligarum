@@ -187,7 +187,7 @@ The `options` parameter is a JSON object containing both *to* and *subject* keys
 
 ### i18n
 
-Despite caligarum has been designed as an API, it should sometimes comuniate with humans in a human compatible format we call mails. Such can be translated using the i18n library.
+Despite caligarum has been designed as an API, it should sometimes comuniate with humans in a human compatible format we call mails. Such can be translated using the i18next library.
 
 Follow this process:
 
@@ -197,25 +197,25 @@ Follow this process:
 
 #### the template
 
-Use the `__` JS function to call the translator service.
+Use the `t()` JS function to call the translator service.
 
-	p= __('greetings', firstname)
+	p= t('greetings', {user: firstname})
 
-This will create a `<p>` tag with the translated message referenced `greetings` with parameter `firstname`. Note that `firstname` should have been defined as a key of the customization object used with *mailer.prepare*.
+This will create a `<p>` tag with the translated message referenced `greetings` with parameter `user` replaced by `firstname`. Note that `firstname` should have been defined as a key of the customization object used with *mailer.prepare*.
 
 #### the translation files
 
 Edit JSON files located in the `locales` folder. You might add as many language as you want to support.
 
 	{
-		"greetings": "Hello %s"
+		"greetings": "Hello {{user}}"
 	}
 
-> Note the use of `%s` which is a placeholder for a string (in our scenario: the firstname).
+> Note the use of `{{user}}` which is a placeholder for a string (in our scenario: the firstname).
 
 #### call the router
 
-Most of your API calls will be language-free. Anyway, should you require to translate things, the i18n engine needs to determine which language to use. Send the `Accept-Language` header to define the right language. i18n will then look for a suitable JSON file.
+Most of your API calls will be language-free. Anyway, should you require to translate things, the i18next engine needs to determine which language to use. Send the `Accept-Language` header to define the right language. i18next will then look for a suitable JSON file.
 
 	Accept-Language: fr-CH, en-US;q=0.9, en;q=0.8
 
