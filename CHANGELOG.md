@@ -1,3 +1,16 @@
+**0.0.3**
+
+change
+
+* update dependencies
+* winston configuration update
+
+add
+
+* figlet powered banner
+* Redis as a dependency will be used as a cache
+* systemd startup script
+
 **0.0.2**
 
 fix
