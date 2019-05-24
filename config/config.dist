@@ -21,8 +21,9 @@
     "file": {
       "enabled": false,
       "filename": "/var/log/caligarum/caligarum.log",
-      "size": 1024,
-      "files": 10
+      "size": 10485760,
+      "files": 10,
+      "zip": true
     }
   },
   "mail": {
@@ -47,6 +48,11 @@
         "key": "your_api_key"
       }
     }
+  },
+  "redis": {
+    "host": "127.0.0.1",
+    "port": 6379,
+    "db": 0
   },
   "server": {
     "port": 8008,

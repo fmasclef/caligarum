@@ -8,9 +8,10 @@
 global.config   = require('./config/' + (process.env.NODE_ENV || 'production') + '.json')
 global.cluster  = require('cluster')
 global.db       = require('./db')
-global.pjson    = require('./package.json')
-global.retcode  = require('./enums/httpStatusCode')
 global.Helpers  = require('./services/helpers')
+global.pjson    = require('./package.json')
+global.redis    = require('redis').createClient(config.redis || {}),
+global.retcode  = require('./enums/httpStatusCode')
 global.winston  = require('winston')
 
 global.basePath = __dirname
@@ -31,19 +32,42 @@ String.prototype.ucfirst = function()
 /**
  * Configure Winston
  */
-winston.configure({ level: config.log.level || 'info', transports: [] });
-if (config.log.console.enabled) winston.add(winston.transports.Console, { colorize: true, timestamp: true })
+winston.configure({
+   level: config.log.level || 'info',
+   format: winston.format.combine(
+     winston.format.splat(),
+     winston.format.colorize(),
+     winston.format.timestamp(),
+     winston.format.align(),
+     winston.format.printf((info) => `${info.timestamp} ${info.level} ${info.message}`)
+   ),
+   transports: []
+ });
+if (config.log.console.enabled) winston.add(new winston.transports.Console())
 if (config.log.file.enabled) winston.add(winston.transports.File,{
   filename : config.log.file.filename || '/var/log/caligarum/caligarum.log',
-  maxsize  : config.log.file.size || 1024,
-  maxFiles : config.log.file.files || 10
+  maxsize  : config.log.file.size || 10485760,
+  maxFiles : config.log.file.files || 10,
+  zippedArchive : 'zip' in config.log.file ? config.log.file.zip : true
 })
 
 /**
  * Start server in a clustered world
  */
 if (cluster.isMaster) {
+
+  // deal with `npm stop`
+  process.title = process.argv[2]
+
   // Hello caligarum
+  let figlet = require('figlet')
+  console.log(
+    figlet.textSync(pjson.name, {
+      font: 'Small',
+      horizontalLayout: 'default',
+      verticalLayout: 'default'
+    })
+  )
   winston.info("%s %s running on port %d from %s", pjson.name, pjson.version, config.server.port, basePath)
 
   // Check caligarum database, patch it if required
