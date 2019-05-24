@@ -1,0 +1,21 @@
+[Unit]
+Description=caligarum daemon
+After=network-online.target
+ 
+[Service]
+Type=simple
+ 
+User=exploit
+Group=users
+UMask=007
+ 
+WorkingDirectory=/data/git/caligarum
+ExecStart=/usr/bin/npm run server
+ 
+Restart=on-failure
+ 
+# Configures the time to wait before service is stopped forcefully.
+TimeoutStopSec=300
+ 
+[Install]
+WantedBy=multi-user.target
