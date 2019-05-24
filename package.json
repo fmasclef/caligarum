@@ -1,6 +1,6 @@
 {
   "name": "caligarum",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "an ORM-free REST API with JWT support",
   "repository": {
     "type": "git",
@@ -8,15 +8,17 @@
   },
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "test": "mocha"
+    "test": "mocha",
+    "server": "NODE_ENV=production node server.js caligarum",
+    "server:dev": "NODE_ENV=development node server.js caligarum",
+    "stop": "pkill -SIGINT caligarum"
   },
   "author": {
-    "name": "fma",
+    "name": "fmasclef",
     "email": "francois.masclef@gmail.com"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.0.0"
   },
   "license": "CC-BY-ND-4.0",
   "dependencies": {
@@ -26,6 +28,7 @@
     "cluster": "*",
     "compression": "*",
     "express": "*",
+    "figlet": "*",
     "generate-password": "*",
     "helmet": "*",
     "i18next": "*",
@@ -40,7 +43,8 @@
     "node-mailjet": "*",
     "os": "*",
     "path": "*",
-    "pug": "^2.0.0-rc.4",
+    "pug": "*",
+    "redis": "*",
     "sparkpost": "*",
     "uuid": "*",
     "winston": "*"
