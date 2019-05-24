@@ -6,6 +6,11 @@ This is **caligarum**, an Express powered API server. caligarum has been designe
 
 Why do we need an ORM free API server? Well, if you're asking the question, you should definitely not use caligarum.
 
+# prerequisites
+
+Caligarum handles data stored in a database. Unless you hack it, you must use **MariaDB** or **MySQL** as your database engine.
+Controllers might use a caching system. Once again, unless you hack it, you must use **Redis**.
+
 # setup instruction
 
 This setup guide assumes the following:
@@ -96,9 +101,21 @@ You can run caligarum from within a terminal or using any distro-level service. 
 From terminal:
 
     $ cd /data/git/caligarum
-    $ NODE_ENV=development npm start
+    $ npm run server
+		OR
+		$ npm run server:dev
 
 When in `production` mode, you should store logs in `/var/log/caligarum ` by setting the correct Winston transport parameters from within the `config/production.json` config file.
+
+A sample `systemd` script is available under the `scripts` directory. Please refer to your distro for suitable guidelines on how to use
+`systemd` or any other daemon management framework.
+
+## stop it
+
+You can stop caligarum using `npm`
+
+	$ cd /data/git/caligarum
+	$ npm stop
 
 ## bundled API calls
 
