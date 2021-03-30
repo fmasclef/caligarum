@@ -31,7 +31,7 @@
     "figlet": "*",
     "generate-password": "*",
     "helmet": "*",
-    "i18next": "*",
+    "i18next": "^20.1.0",
     "i18next-express-middleware": "*",
     "i18next-node-fs-backend": "*",
     "jwt-simple": "*",
